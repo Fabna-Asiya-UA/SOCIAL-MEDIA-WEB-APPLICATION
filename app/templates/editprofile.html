@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}
+Edit Profile
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container mt-7">
+    <div class="card p-4 shadow">
+        <h2 class="text-center mb-4 text-danger">Edit Profile</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-danger">Update</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

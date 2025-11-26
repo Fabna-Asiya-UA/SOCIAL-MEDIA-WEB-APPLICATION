@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}View Posts{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-lg border-0 p-5">
+        <h2 class="text-center text-danger mb-4">All Posts</h2>
+        {% for post in posts %}
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-lg">
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" class="card-img-top" alt="Post Image">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ post.user }}</h5>
+                        <p class="card-text">{{ post.caption }}</p>
+                        <small class="text-muted">{{ post.created_at }}</small>
+                        {% if request.user == post.user %}
+<form action="{% url 'delete_post' post.id %}" method="POST" class="mt-2">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+</form>
+{% endif %}
+
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-center text-muted">No posts yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

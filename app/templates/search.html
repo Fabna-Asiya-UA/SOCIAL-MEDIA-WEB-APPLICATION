@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}
+search
+{% endblock %}
+
+
+{% block content %}
+{% if query %}
+    <h4>Search Results for "{{ query }}":</h4>
+
+    {% for post in results %}
+        <div class="card my-3 p-3">
+            <h5>{{ post.caption }}</h5>
+            <img src="{{ post.image.url }}" width="200">
+        </div>
+    {% empty %}
+        <p>No results found.</p>
+    {% endfor %}
+{% endif %}
+
+
+{% endblock %}

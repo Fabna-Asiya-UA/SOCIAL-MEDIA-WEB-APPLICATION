@@ -1,0 +1,5 @@
+.navbar-nav li:hover{
+    background-color:maroon;
+    border-radius: 10px;
+    border: 2px solid lightblue;
+}
