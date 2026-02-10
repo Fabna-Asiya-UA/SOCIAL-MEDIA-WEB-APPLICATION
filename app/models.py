@@ -15,6 +15,16 @@ class Addposts(models.Model):
     caption = models.TextField()
     image = models.ImageField(upload_to='addposts/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    liked_by = models.ManyToManyField(User, related_name='liked_posts', blank=True)
 
     def __str__(self):
         return self.user.username if self.user else "No User"
+    
+class Comment(models.Model):
+    post = models.ForeignKey(Addposts, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.text[:20]}"

@@ -9,10 +9,12 @@ Add Posts
 <div class="container my-5">
     <div class="card shadow-lg border-0 p-5">
         <h2 class="text-center text-danger mb-4">Add Posts</h2>
+        <hr>
 
         <form action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form|crispy }}
+
             <button class="btn btn-danger mt-4" type="submit">Submit</button>
         </form>
 

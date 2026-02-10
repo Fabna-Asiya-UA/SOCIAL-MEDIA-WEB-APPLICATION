@@ -7,7 +7,7 @@ Profile
 <div class="container my-5">
     <div class="card shadow-lg border-0 p-5">
         <h2 class="text-center text-danger mb-4">Profile</h2>
-
+<hr>
         {% if profile.user_photo %}
             <img src="{{ profile.user_photo.url }}" alt="Profile Photo" width="200"
                  class="img-fluid rounded-circle mb-3">
@@ -20,9 +20,12 @@ Profile
         <p><strong>Email:</strong> {{ profile.user.email }}</p>
         <p><strong>Bio:</strong> {{ profile.bio }}</p>
 
-        <a href="{% url 'edit_profile' %}" class="btn btn-danger w-25">
-            Edit Profile
-        </a>
+        {% if request.user == profile.user %}
+    <a href="{% url 'edit_profile' %}" class="btn btn-danger w-25">
+        ✏️ Edit Profile
+    </a>
+{% endif %}
+
     </div>
 </div>
 {% endblock %}

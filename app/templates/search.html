@@ -1,22 +1,60 @@
 {% extends "base.html" %}
-{% block title %}
-search
-{% endblock %}
-
+{% block title %}Search{% endblock %}
 
 {% block content %}
-{% if query %}
-    <h4>Search Results for "{{ query }}":</h4>
+<div class="container my-5">
 
-    {% for post in results %}
-        <div class="card my-3 p-3">
-            <h5>{{ post.caption }}</h5>
-            <img src="{{ post.image.url }}" width="200">
-        </div>
-    {% empty %}
-        <p>No results found.</p>
-    {% endfor %}
-{% endif %}
+    <h4>Search results for "{{ query }}"</h4>
 
+    {% if user_results %}
+        {% for item in user_results %}
+            <div class="card shadow-lg mb-4 p-4">
 
+                <!-- USER INFO -->
+                <div class="d-flex align-items-center mb-3">
+                    {% if item.profile and item.profile.user_photo %}
+                        <img src="{{ item.profile.user_photo.url }}"
+                             width="60" class="rounded-circle me-3">
+                    {% else %}
+                        <img src="/static/default_user.png"
+                             width="60" class="rounded-circle me-3">
+                    {% endif %}
+
+                    <div>
+                        <h6 class="mb-0">{{ item.user.username }}</h6>
+                        <small class="text-muted">{{ item.user.email }}</small>
+                    </div>
+                </div>
+
+                <!-- POSTS -->
+                <h6 class="mb-3">📝 Posts</h6>
+
+                {% if item.posts %}
+                    {% for post in item.posts %}
+                        <div class="border rounded p-3 mb-3">
+
+                            <p>{{ post.caption }}</p>
+
+                            {% if post.image %}
+                                <img src="{{ post.image.url }}"
+                                     class="img-fluid rounded mb-2">
+                            {% endif %}
+                            <br>
+                            <small class="text-muted">
+                                🕒 {{ post.created_at|date:"M d, Y • H:i" }}
+                            </small>
+
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted">No posts</p>
+                {% endif %}
+
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-muted">No users found.</p>
+    {% endif %}
+
+</div>
 {% endblock %}

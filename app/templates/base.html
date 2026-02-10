@@ -12,13 +12,9 @@
 </head>
 <body>
 
-    
-
 <nav class="navbar navbar-expand-lg py-3" style="background-color: crimson;">
     <div class="container-fluid">
-
         <a class="navbar-brand text-white fw-bold" href="#">Social Media</a>
-
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -28,14 +24,21 @@
 
                 <li class="nav-item"><a class="nav-link text-white" href="{% url 'home' %}">Home</a></li>
                 <li class="nav-item"><a class="nav-link text-white" href="{% url 'addposts' %}">Add Posts</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="{% url 'viewposts' %}">View Posts</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="{% url 'view_posts' %}">View Posts</a></li>
                 <li class="nav-item"><a class="nav-link text-white" href="{% url 'about' %}">About</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="{% url 'profile' %}">Profile</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="{% url 'logout' %}">Logout</a></li>
+
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'profile' request.user.username %}">Profile</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'login' %}">Login</a></li>
+                {% endif %}
 
                 <li class="nav-item ms-lg-3">
                     <form method="GET" action="{% url 'search' %}" class="d-flex">
-                        <input type="text" name="q" class="form-control form-control-sm" placeholder="Search contents">
+                        <input type="text" name="q" class="form-control form-control-sm" placeholder="Search Users">
                         <button type="submit" class="btn btn-light btn-sm ms-2">Go</button>
                     </form>
                 </li>
@@ -45,9 +48,7 @@
     </div>
 </nav>
 
-
-
-<div class="container-fluid py-5 text-white" style="background-color: rgb(135, 95, 102); min-height: 100vh;">
+<div class="container-fluid py-5 text-white" style="background-color: rgb(135, 95, 102); min-height: 80vh;">
     {% block content %}{% endblock %}
 </div>
 
@@ -56,6 +57,5 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>
